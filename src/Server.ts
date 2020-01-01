@@ -3,7 +3,6 @@ import express from 'express';
 import { Request, Response } from 'express';
 import logger from 'morgan';
 import path from 'path';
-import BaseRouter from './routes';
 import { NewPostWatcher } from './_watcher';
 
 // Init express
@@ -14,7 +13,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use('/api', BaseRouter);
 let watcher = new NewPostWatcher();
 watcher.init();
 

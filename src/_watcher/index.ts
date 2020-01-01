@@ -4,9 +4,8 @@ import * as path from 'path';
 import { IResultChildren, IListener, IPostData, IUserAddress } from './postData.interface';
 import { NotificationSender } from './notificationSender';
 const safeEval = require("safe-eval");
-
-
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
+
 export class NewPostWatcher {
     private static _timeout:NodeJS.Timeout;
 

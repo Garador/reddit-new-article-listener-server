@@ -62,7 +62,10 @@
             $scope.reset = function () {
                 $scope.title = "Some Title";
                 $scope.author = "Some Author";
-                $scope.evalText = `//if(title.toLowerCase().indexOf("hiring")<0) return false;
+                $scope.evalText = `
+title = title.toLowerCase();
+content = content.toLowerCase();
+if(title.indexOf("hiring")<0) return false;
 
 let _ranking = 0;
 if((title.indexOf("developer") > -1) || (content.indexOf("developer") > -1)) return true;
@@ -77,10 +80,6 @@ return _ranking > 3;`;
                 $scope.errorText = "";
                 $scope.content = "Some post text";
             }
-
-/**
-    if(title.toLowerCase().indexOf("hiring")<0) return false;  let _ranking = 0; if(title.indexOf("developer") > -1){      return true; }  _ranking+= (title.indexOf("developer") > -1) || (content.indexOf("developer") > -1) ? 1 : 0; _ranking+= (title.indexOf("development") > -1) || (content.indexOf("development") > -1) ? 1 : 0; _ranking+= (title.indexOf("_program") > -1) || (content.indexOf("_program") > -1) ? 1 : 0; if((title.indexOf("_programmer") > -1) || (content.indexOf("_programmer") > -1)){      return true; }  _ranking+= (title.indexOf("_software") > -1) || (content.indexOf("_software") > -1) ? 1 : 0; _ranking+= (title.indexOf("_software") > -1) || (content.indexOf("_software") > -1); return _ranking > 3;
-*/
             $scope.reset();
 
             $scope.isValid = function(){
