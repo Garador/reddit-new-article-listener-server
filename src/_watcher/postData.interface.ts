@@ -3,10 +3,8 @@ export interface IUserAddress {
 }
 
 export interface IListener {
-    UID: string,
-    last_matched_post_created_utc: number,
-    last_matched_post_permalink: string,
-    listener: string
+    eval_function: string,
+    user: string
 }
 
 export interface IResultChildren {

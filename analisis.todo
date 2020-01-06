@@ -1,0 +1,8 @@
+Cuando se actualiza la data de posts:
+** Correr tests de todos los listeners.
+
+Cuando se actualiza un listener en particular:
+** Correr tests de dicho listener.
+
+Cuando se ha agregado un listener en particular:
+** Correr tests de dicho listener.

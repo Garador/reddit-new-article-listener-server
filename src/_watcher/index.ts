@@ -1,17 +1,17 @@
 import * as request from "request-promise-native";
 import * as admin from 'firebase-admin';
 import * as path from 'path';
-import { IResultChildren, IListener, IPostData, IUserAddress } from './postData.interface';
-import { NotificationSender } from './notificationSender';
-const safeEval = require("safe-eval");
+import { IResultChildren, IListener } from './postData.interface';
+import { Refs } from './refs';
+import { path_redditPostCheckData, path_lastFetchedPosts, path_lastPostAddedAt, path_lastListenerSetAt } from 'src/constants';
+import { getData } from 'src/Utils';
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
 
 export class NewPostWatcher {
     private static _timeout:NodeJS.Timeout;
 
     initializeFirebase(){
-        var serviceAccount = require(path.resolve('keys/general-practice-444e5-firebase-adminsdk-dyl2r-64f8b2d95d.json'));
-
+        var serviceAccount = require(path.resolve('keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json'));
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
             databaseURL: "https://general-practice-444e5.firebaseio.com"
@@ -23,7 +23,6 @@ export class NewPostWatcher {
         var options = {
             uri: baseUrl + queryString,
         };
-      
         const result = await request.get(options);
         try{
             return JSON.parse(result)['data']['children'];
@@ -33,87 +32,73 @@ export class NewPostWatcher {
     }
 
     private async _getPosts(){
-        //console.log("_getPosts -- 1");
-        let listeners = await admin.firestore().collection('reddit_watchers').get();
-        let result:{[index:string]:IPostData[]} = {};
-        //console.log({'listeners.docs':listeners.docs.length});
-        for(let i=0;i<listeners.docs.length;i++){
-            let posts = await this._getRedditJsonPost(listeners.docs[i].id);
-            //console.log("_getPosts -- 2");
-            let _related_user_listeners = <IListener[]> listeners.docs[i].data().listeners;
-            let _lastMatchIndex:{[index:number]:number} = {};
-            posts.forEach(({data})=>{
-                //console.log("_getPosts -- 3");
-                _related_user_listeners.forEach((_listenerData, index:number)=>{
-                    //console.log("_getPosts -- 4");
-                    try{
-                        let title = data.title+"";
-                        let text = data.selftext+"";
-                        let author = data.author+"";
-                        let matches =  safeEval(`
-                        ((title, text, author)=>{
-                            ${_listenerData.listener}
-                        })(title, text, author)
-                        `, {
-                            title, text, author
-                        });
-                        if(matches){
-                            console.log({'result[_listenerData.UID] first: ':result[_listenerData.UID]});
-                            if(!result[_listenerData.UID] || result[_listenerData.UID].length < 1){
-                                result[_listenerData.UID] = [];
-                            }
-                            console.log({'result[_listenerData.UID] second: ':result[_listenerData.UID]});
-                            if(data.created_utc > _listenerData.last_matched_post_created_utc){
-                                result[_listenerData.UID].push(data);
-                                //_related_user_listeners[index].last_matched_post_created_utc = data.created_utc;
-                                if(!_lastMatchIndex[index] || data.created_utc > _lastMatchIndex[index]){
-                                    _lastMatchIndex[index] = data.created_utc;
-                                }
-                            }
-                            //console.log({'result[_listenerData.UID] third: ':result[_listenerData.UID]});
-                        }
-                    }catch(e){
-                        //console.log("_getPosts -- 5");
-                        //console.log({e});
-                    }
-                });
+        let subs = await Refs.subsCollectionRef.listDocuments();
+        let result:{
+            [index:string]:{
+                posts:IResultChildren[],
+                listeners: IListener[]
+            }
+        } = {};
+        let _lastPostAddedAt:{[index:string]:number} = await getData(admin.database().ref(path_lastPostAddedAt));
+        let _lastListenerSetAt:{[index:string]:number} = await getData(admin.database().ref(path_lastListenerSetAt));
+
+        for(let i=0;i<subs.length;i++){
+            let posts = await this._getRedditJsonPost(subs[i].id);
+            if(posts[0].data.created_utc == _lastPostAddedAt[subs[i].id]){
+                console.log(`Have not updated: ${subs[i].id}`);
+                continue;
+            }else{
+                console.log(`Updating: ${subs[i].id}`);
+            }
+            let listeners = <IListener[]>(await Refs.getSubListenersRef(subs[i].id).get()).docs.map((data)=>{
+                return data.data();
             });
-            Object.keys(_lastMatchIndex)
-            .forEach((index)=>{
-                _related_user_listeners[parseInt(index)].last_matched_post_created_utc = _lastMatchIndex[parseInt(index)];
-            });
-            listeners.docs[i].ref.update({
-                listeners: _related_user_listeners
-            });
+            result[subs[i].id] = {
+                posts,
+                listeners
+            };
         }
         return result;
     }
 
-    async notifyUser(userID:string, data:IPostData[]){
-        let userAddress:IUserAddress = <IUserAddress>(await admin.firestore().doc(`reddit_watchers_adresses/${userID}`).get()).data();
-        let notificationSender = new NotificationSender();
-        let _htmlData = data.map((element)=>{
-            //return `<br/><a href="${element.url}>${element.title}</a>"`;
-            return `<b>${element.title}</b> (${element.subreddit}) (${element.url}) <br/><br/>`;
-        }).join(`\n`) || "No HTML text appended";
-        let _nonHTMLData = data.map((element)=>{
-            return `${element.title}`;
-        }).join(`\n`) || "No plain text appended";
-        notificationSender.sendEmail(userAddress.email, `You have ${data.length} posts that match your filters.`, _nonHTMLData, _htmlData);
+    async markLastFetchedAt(subId:string[]){
+        const data:any = await new Promise((accept)=>{
+            admin.database().ref(path_lastFetchedPosts)
+            .on('value', (data)=>{
+                accept(data ? data.toJSON() ? data.toJSON() : {} : {});
+            })
+        });
+        for(let i=0;i<subId.length;i++){
+            data[subId[i]] = admin.database.ServerValue.TIMESTAMP;
+        }
+        await admin.database().ref(path_lastFetchedPosts).set(data);
     }
 
-    async verifyNewPosts(){
+    async markLastPostAddedAt(posts:{[index:string]:IResultChildren[]}){
+        const data:any = await new Promise((accept)=>{
+            admin.database().ref(path_lastPostAddedAt)
+            .on('value', (data)=>{
+                accept(data ? data.toJSON() ? data.toJSON() : {} : {});
+            });
+        });
+        let subId = Object.keys(posts);
+        for(let i=0;i<subId.length;i++){
+            data[subId[i]] = posts[subId[i]][0].data.created_utc;
+        }
+        await admin.database().ref(path_lastPostAddedAt).set(data);
+    }
+
+    async saveNewPosts(){
         if((<any>(global)).verifying) return;
-        console.log(`Verifying...`);
         (<any>(global)).verifying = true;
         let result = await this._getPosts();
-        let _users = Object.keys(result);
-        for(let i=0;i<_users.length;i++){
-            if(result[_users[i]].length && result[_users[i]].length > 0){
-                this.notifyUser(_users[i], result[_users[i]]);
-            }
-        }
-
+        await admin.database().ref(path_redditPostCheckData).set(result);
+        await this.markLastFetchedAt(Object.keys(result));
+        let _markLastCreatedAt:{[index:string]:IResultChildren[]} = {};
+        Object.keys(result).forEach((key)=>{
+            _markLastCreatedAt[key] = result[key].posts;
+        });
+        await this.markLastPostAddedAt(_markLastCreatedAt);
         (<any>(global)).verifying = false;
     }
 
@@ -122,9 +107,10 @@ export class NewPostWatcher {
             clearInterval(NewPostWatcher._timeout);
         }else{
             this.initializeFirebase();
+            this.saveNewPosts();
         }
         NewPostWatcher._timeout = setInterval(async ()=>{
-            this.verifyNewPosts();
+            this.saveNewPosts();
         }, INTERVAL);
     }
 }
