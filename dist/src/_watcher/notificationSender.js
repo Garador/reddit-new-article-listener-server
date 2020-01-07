@@ -39,7 +39,7 @@ class NotificationSender {
                 return `
                             <b><h3>${data.title}</h3></b>(${_date}) (${data.url})
                             <br/>
-                            ${data.selftext_html}
+                            ${data.selftext}
                         `.trim();
             }).join("<br/><br/><hr/>"))()}`.trim(),
             text: `
