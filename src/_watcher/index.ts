@@ -10,14 +10,14 @@ import { UtilsManager } from '../_utils';
 import { EvalManager } from '../managers/EvalManager';
 import { NotificationSender } from './notificationSender';
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
+import fbkey from '../../keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json';
 
 export class NewPostWatcher {
     private static _timeout:NodeJS.Timeout;
 
     initializeFirebase(){
-        var serviceAccount = require('../../keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json');
         admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
+            credential: admin.credential.cert(<any>fbkey),
             databaseURL: "https://general-practice-444e5.firebaseio.com"
         });
     }

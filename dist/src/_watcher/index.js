@@ -11,11 +11,11 @@ const _utils_1 = require("../_utils");
 const EvalManager_1 = require("../managers/EvalManager");
 const notificationSender_1 = require("./notificationSender");
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
+const general_practice_444e5_firebase_adminsdk_dyl2r_a0160fc787_json_1 = tslib_1.__importDefault(require("../../keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json"));
 class NewPostWatcher {
     initializeFirebase() {
-        var serviceAccount = require('../../keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json');
         admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
+            credential: admin.credential.cert(general_practice_444e5_firebase_adminsdk_dyl2r_a0160fc787_json_1.default),
             databaseURL: "https://general-practice-444e5.firebaseio.com"
         });
     }

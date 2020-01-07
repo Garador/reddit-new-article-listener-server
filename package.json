@@ -4,7 +4,7 @@
   "scripts": {
     "build_": "node ./util/build.js",
     "lint": "tslint --project \"tsconfig.json\"",
-    "start": "node dist",
+    "start": "node dist/src",
     "start:dev": "nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json"
   },
