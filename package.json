@@ -4,7 +4,8 @@
   "scripts": {
     "build": "node ./util/build.js",
     "lint": "tslint --project \"tsconfig.json\"",
-    "start": "node -r module-alias/register ./dist",
+    "start2": "node -r module-alias/register ./dist",
+    "start": "nodemon --config nodemon.prod.json",
     "start:dev": "nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json"
   },
@@ -32,6 +33,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
     "safe-eval": "^0.4.1",
+    "nodemon": "^2.0.2",
     "webworker-threads": "^0.7.17",
     "winston": "^3.2.1"
   },
@@ -50,7 +52,6 @@
     "fs-extra": "^8.1.0",
     "jasmine": "^3.5.0",
     "jsonfile": "^5.0.0",
-    "nodemon": "^2.0.2",
     "supertest": "^4.0.2",
     "ts-node": "^8.5.4",
     "tsconfig-paths": "^3.9.0",
