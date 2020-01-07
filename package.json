@@ -4,8 +4,9 @@
   "scripts": {
     "build": "node ./util/build.js",
     "lint": "tslint --project \"tsconfig.json\"",
+    "build2": "ts-node -r tsconfig-paths/register ./src --env=production",
+    "start": "ts-node -r tsconfig-paths/register ./src --env=production",
     "start2": "node -r module-alias/register ./dist",
-    "start": "nodemon",
     "start:dev": "nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json"
   },
@@ -26,19 +27,19 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase-admin": "^8.9.0",
+    "fs-extra": "^8.1.0",
     "http-status-codes": "^1.4.0",
     "module-alias": "^2.2.2",
     "moment-timezone": "^0.5.27",
     "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
     "safe-eval": "^0.4.1",
-    "nodemon": "^2.0.2",
     "ts-node": "^8.5.4",
-    "webworker-threads": "^0.7.17",
-    "winston": "^3.2.1",
     "typescript": "^3.7.4",
-    "fs-extra": "^8.1.0"
+    "webworker-threads": "^0.7.17",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
