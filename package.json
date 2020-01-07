@@ -5,7 +5,7 @@
     "build": "node ./util/build.js",
     "lint": "tslint --project \"tsconfig.json\"",
     "start2": "node -r module-alias/register ./dist",
-    "start": "nodemon --config nodemon.prod.json",
+    "start": "nodemon",
     "start:dev": "nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json"
   },
