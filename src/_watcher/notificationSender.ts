@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 import { path_notificationsQueue } from 'src/constants';
 import { INotificationData, IPostData } from 'src/constants/postData.interface';
+import * as moment from 'moment-timezone';
 
 const SENDGRID_KEY = process.env.SENDGRID_KEY;
 const sgMail = require("@sendgrid/mail");
@@ -38,10 +39,13 @@ export class NotificationSender {
                 You have ${_posts.length} posts that match your criteria!<br/>
                 ${
                     (()=>_posts.map((data)=>{
+                        let _date = moment.utc(new Date(data.created_utc*1000)).tz('America/Caracas').format("HH:mm:ss z")
                         return `
-                            <b>${data.title}</b> (${data.url})
+                            <b><h3>${data.title}</h3></b>(${_date}) (${data.url})
+                            <br/>
+                            ${data.selftext_html}
                         `.trim();
-                    }).join("<br/>"))()
+                    }).join("<br/><br/><hr/>"))()
                 }`.trim(),
             text: `
                 You have ${_posts.length} posts that match your criteria!<br/>
