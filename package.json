@@ -28,6 +28,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
     "safe-eval": "^0.4.1",
+    "webworker-threads": "^0.7.17",
     "winston": "^3.2.1"
   },
   "devDependencies": {

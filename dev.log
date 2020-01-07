@@ -1,0 +1,54 @@
+
+> server@0.0.0 start:dev /home/azolot/Documents/Important/_work/RedditNotifier/server
+> nodemon --config nodemon.json
+
+[33m[nodemon] 2.0.2[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching dir(s): src/**/*[39m
+[33m[nodemon] watching extensions: ts[39m
+[32m[nodemon] starting `ts-node -r tsconfig-paths/register ./src --env=development`[39m
+Litening on port: 4200
+Have not updated: hiring
+Updating: jobs
+saveNewPosts #1
+saveNewPosts #2
+saveNewPosts #3
+saveNewPosts #4
+Accepting 2
+Matched 0 post:  { listener:
+   { eval_function: 'return true;',
+     user: 'yTbA88r08jYer63B4qLtd0x7XEx1',
+     id: '5c555af30b76c' },
+  post: 'Should I take this job if I do get offered it?' }
+Have not updated: hiring
+Have not updated: jobs
+saveNewPosts #1
+saveNewPosts #2
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node -r tsconfig-paths/register ./src --env=development`[39m
+Litening on port: 4200
+Have not updated: hiring
+Have not updated: jobs
+saveNewPosts #1
+saveNewPosts #2
+saveNewPosts #3
+saveNewPosts #4
+Have not updated: hiring
+Have not updated: jobs
+saveNewPosts #1
+saveNewPosts #2
+saveNewPosts #3
+saveNewPosts #4
+Have not updated: hiring
+Updating: jobs
+saveNewPosts #1
+saveNewPosts #2
+saveNewPosts #3
+saveNewPosts #4
+Accepting 2
+Matched 0 post:  { listener:
+   { user: 'yTbA88r08jYer63B4qLtd0x7XEx1',
+     eval_function: 'return true;',
+     id: '5c555af30b76c' },
+  post:
+   'How to inform current employer about a job offer without looking like I\'m trying to "get them over a barrel?"' }
