@@ -9,6 +9,9 @@
     "start:dev": "nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json"
   },
+  "engines": {
+    "node": "10.10.0"
+  },
   "_moduleAliases": {
     "@daos": "dist/daos",
     "@entities": "dist/entities",
