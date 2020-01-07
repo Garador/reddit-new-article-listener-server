@@ -6,7 +6,7 @@
     "lint": "tslint --project \"tsconfig.json\"",
     "build2": "ts-node -r tsconfig-paths/register ./src --env=production",
     "build3":"tsc --build tsconfig.prod.json",
-    "start": "node -r module-alias/register ./dist",
+    "start": "node -r module-alias/register dist",
     "start2": "node -r module-alias/register ./dist",
     "start:dev": "nodemon --config nodemon.json",
     "test": "nodemon --config nodemon.test.json"
