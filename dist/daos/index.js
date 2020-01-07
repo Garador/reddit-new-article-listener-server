@@ -6,4 +6,3 @@ if (usingMockDb === 'true') {
     userDaoPath += '.mock';
 }
 exports.UserDao = require(userDaoPath).UserDao;
-//# sourceMappingURL=index.js.map

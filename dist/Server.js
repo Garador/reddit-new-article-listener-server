@@ -21,4 +21,3 @@ app.get('*', (req, res) => {
     res.sendFile('index.html', { root: viewsDir });
 });
 exports.default = app;
-//# sourceMappingURL=Server.js.map

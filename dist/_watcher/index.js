@@ -215,4 +215,3 @@ class NewPostWatcher {
     }
 }
 exports.NewPostWatcher = NewPostWatcher;
-//# sourceMappingURL=index.js.map

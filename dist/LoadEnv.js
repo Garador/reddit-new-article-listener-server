@@ -17,4 +17,3 @@ const result2 = dotenv_1.default.config({
 if (result2.error) {
     throw result2.error;
 }
-//# sourceMappingURL=LoadEnv.js.map

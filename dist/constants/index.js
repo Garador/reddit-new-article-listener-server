@@ -67,4 +67,3 @@ function path_listenerLastNotifiedAt(uid, listenerId) {
 }
 exports.path_listenerLastNotifiedAt = path_listenerLastNotifiedAt;
 exports.path_notificationsQueue = 'reddit_ntfs_q';
-//# sourceMappingURL=index.js.map

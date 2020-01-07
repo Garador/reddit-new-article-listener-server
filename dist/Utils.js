@@ -12,4 +12,3 @@ function getData(ref) {
     });
 }
 exports.getData = getData;
-//# sourceMappingURL=Utils.js.map
