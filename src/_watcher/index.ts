@@ -15,7 +15,7 @@ export class NewPostWatcher {
     private static _timeout:NodeJS.Timeout;
 
     initializeFirebase(){
-        var serviceAccount = require(path.resolve('keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json'));
+        var serviceAccount = require('../../keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json');
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
             databaseURL: "https://general-practice-444e5.firebaseio.com"

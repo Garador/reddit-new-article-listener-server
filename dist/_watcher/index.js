@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const request = tslib_1.__importStar(require("request-promise-native"));
 const admin = tslib_1.__importStar(require("firebase-admin"));
-const path = tslib_1.__importStar(require("path"));
 const refs_1 = require("./refs");
 const constants_1 = require("../constants");
 const Utils_1 = require("../Utils");
@@ -14,7 +13,7 @@ const notificationSender_1 = require("./notificationSender");
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
 class NewPostWatcher {
     initializeFirebase() {
-        var serviceAccount = require(path.resolve('keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json'));
+        var serviceAccount = require('../../keys/general-practice-444e5-firebase-adminsdk-dyl2r-a0160fc787.json');
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
             databaseURL: "https://general-practice-444e5.firebaseio.com"
