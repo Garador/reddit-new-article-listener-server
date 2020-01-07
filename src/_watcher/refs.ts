@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import { path_redditSubs } from 'src/constants';
+import { path_redditSubs } from '../constants';
 
 
 export class Refs {

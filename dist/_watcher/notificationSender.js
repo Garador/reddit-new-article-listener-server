@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const admin = tslib_1.__importStar(require("firebase-admin"));
-const constants_1 = require("src/constants");
+const constants_1 = require("../constants");
 const moment = tslib_1.__importStar(require("moment-timezone"));
 const SENDGRID_KEY = process.env.SENDGRID_KEY;
 const sgMail = require("@sendgrid/mail");

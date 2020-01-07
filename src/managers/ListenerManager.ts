@@ -1,5 +1,5 @@
-import { IListener } from 'src/constants/postData.interface';
-import { Refs } from 'src/_watcher/refs';
+import { IListener } from '../constants/postData.interface';
+import { Refs } from '../_watcher/refs';
 
 export class ListenerManager {
 

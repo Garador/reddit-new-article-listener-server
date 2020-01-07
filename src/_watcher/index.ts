@@ -3,11 +3,11 @@ import * as admin from 'firebase-admin';
 import * as path from 'path';
 import { IResultChildren, IListener, IPostData, IUserAddress } from '../constants/postData.interface';
 import { Refs } from './refs';
-import { path_redditPostCheckData, path_lastFetchedPosts, path_lastPostAddedAt, path_lastListenerSetAt, IUserContact, path_userContacts, path_listenerLastNotifiedAtPrev, path_listenerLastNotifiedAt, path_notificationsQueue } from 'src/constants';
-import { getData } from 'src/Utils';
-import { ListenerManager } from 'src/managers/ListenerManager';
-import { UtilsManager } from 'src/_utils';
-import { EvalManager } from 'src/managers/EvalManager';
+import { path_redditPostCheckData, path_lastFetchedPosts, path_lastPostAddedAt, path_lastListenerSetAt, IUserContact, path_userContacts, path_listenerLastNotifiedAtPrev, path_listenerLastNotifiedAt, path_notificationsQueue } from '../constants';
+import { getData } from '../Utils';
+import { ListenerManager } from '../managers/ListenerManager';
+import { UtilsManager } from '../_utils';
+import { EvalManager } from '../managers/EvalManager';
 import { NotificationSender } from './notificationSender';
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
 

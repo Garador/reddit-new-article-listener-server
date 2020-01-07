@@ -5,11 +5,11 @@ const request = tslib_1.__importStar(require("request-promise-native"));
 const admin = tslib_1.__importStar(require("firebase-admin"));
 const path = tslib_1.__importStar(require("path"));
 const refs_1 = require("./refs");
-const constants_1 = require("src/constants");
-const Utils_1 = require("src/Utils");
-const ListenerManager_1 = require("src/managers/ListenerManager");
-const _utils_1 = require("src/_utils");
-const EvalManager_1 = require("src/managers/EvalManager");
+const constants_1 = require("../constants");
+const Utils_1 = require("../Utils");
+const ListenerManager_1 = require("../managers/ListenerManager");
+const _utils_1 = require("../_utils");
+const EvalManager_1 = require("../managers/EvalManager");
 const notificationSender_1 = require("./notificationSender");
 const INTERVAL = process.env.TIMER_INTERVAL ? parseInt(process.env.TIMER_INTERVAL) : 10000;
 class NewPostWatcher {

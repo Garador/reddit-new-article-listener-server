@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
-import { path_notificationsQueue } from 'src/constants';
-import { INotificationData, IPostData } from 'src/constants/postData.interface';
+import { path_notificationsQueue } from '../constants';
+import { INotificationData, IPostData } from '../constants/postData.interface';
 import * as moment from 'moment-timezone';
 
 const SENDGRID_KEY = process.env.SENDGRID_KEY;
