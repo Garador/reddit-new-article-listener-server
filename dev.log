@@ -52,3 +52,7 @@ Matched 0 post:  { listener:
      id: '5c555af30b76c' },
   post:
    'How to inform current employer about a job offer without looking like I\'m trying to "get them over a barrel?"' }
+Have not updated: hiring
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node -r tsconfig-paths/register ./src --env=development`[39m
+Litening on port: 4200

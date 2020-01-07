@@ -33,7 +33,7 @@ export class NotificationSender {
 
     assembleEmailBody(_posts:IPostData[]){
         return {
-            title: `You have ${_posts.length} posts that match your criteria! (/r/${_posts[0].subreddit_id})`,
+            title: `You have ${_posts.length} posts that match your criteria! (/r/${_posts[0].subreddit})`,
             html: `
                 You have ${_posts.length} posts that match your criteria!<br/>
                 ${
